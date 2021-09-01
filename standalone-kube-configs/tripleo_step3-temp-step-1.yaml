@@ -1,0 +1,215 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step3
+  name: tripleo_step3-temp-step-1
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 884565cb9719e2e4c2a72b7dfeed7946
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        detach: false
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 884565cb9719e2e4c2a72b7dfeed7946
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        start_order: 1
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/nova:/var/log/nova:z
+        - /var/log/containers/httpd/nova-api:/var/log/httpd:z
+        - /var/lib/kolla/config_files/nova_api_map_cell0.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step3
+      container_name: nova_api_map_cell0
+      managed_by: tripleo_ansible
+      temporary: true
+    name: nova_api_map_cell0
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_nova-api___var_log_httpd
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova_api_map_cell0.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova___var_lib_kolla_config_files_src
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    - name: TRIPLEO_CONFIG_HASH
+      value: 11caea3f85de66dbd72d400771e7bbb1
+    image: 38.102.83.65:5001/tripleomaster/openstack-placement-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        detach: false
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 11caea3f85de66dbd72d400771e7bbb1
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-placement-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        start_order: 1
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/placement:/var/log/placement:z
+        - /var/log/containers/httpd/placement:/var/log/httpd:z
+        - /var/lib/kolla/config_files/placement_api_db_sync.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/placement:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step3
+      container_name: placement_api_db_sync
+      managed_by: tripleo_ansible
+      temporary: true
+    name: placement_api_db_sync
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/placement
+      name: _var_log_containers_placement___var_log_placement
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_placement___var_log_httpd
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_placement_api_db_sync.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_placement___var_lib_kolla_config_files_src
+      readOnly: true
+  hostNetwork: true
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/nova
+    name: _var_log_containers_nova___var_log_nova
+  - hostPath:
+      path: /var/log/containers/httpd/nova-api
+    name: _var_log_containers_httpd_nova-api___var_log_httpd
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova_api_map_cell0.json
+    name: _var_lib_kolla_config_files_nova_api_map_cell0.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/nova
+    name: _var_lib_config-data_puppet-generated_nova___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/log/containers/placement
+    name: _var_log_containers_placement___var_log_placement
+  - hostPath:
+      path: /var/log/containers/httpd/placement
+    name: _var_log_containers_httpd_placement___var_log_httpd
+  - hostPath:
+      path: /var/lib/kolla/config_files/placement_api_db_sync.json
+    name: _var_lib_kolla_config_files_placement_api_db_sync.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/placement
+    name: _var_lib_config-data_puppet-generated_placement___var_lib_kolla_config_files_src

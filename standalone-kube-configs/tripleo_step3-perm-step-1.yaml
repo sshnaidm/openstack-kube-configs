@@ -1,0 +1,233 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step3
+  name: tripleo_step3-step-1
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 4d1b89d476636748267f959151a9bca6
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-libvirt:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        cgroupns: host
+        depends_on:
+        - tripleo_nova_virtlogd_wrapper.service
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 4d1b89d476636748267f959151a9bca6
+        healthcheck:
+          test: /openstack/healthcheck libvirtd
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-libvirt:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        pid: host
+        pids_limit: 65536
+        privileged: true
+        restart: always
+        security_opt:
+        - label=level:s0
+        - label=type:spc_t
+        - label=filetype:container_share_t
+        start_order: 1
+        ulimit:
+        - nofile=131072
+        - nproc=126960
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/libvirt:/var/log/libvirt:z
+        - /etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro
+        - /var/lib/kolla/config_files/nova_libvirt.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova_libvirt:/var/lib/kolla/config_files/src:ro
+        - /var/lib/container-config-scripts/nova_libvirt_launcher.sh:/nova_libvirt_launcher.sh:ro
+        - /var/lib/tripleo-config/ceph:/var/lib/kolla/config_files/src-ceph:ro
+        - /lib/modules:/lib/modules:ro
+        - /dev:/dev
+        - /run:/run
+        - /sys/fs/cgroup:/sys/fs/cgroup
+        - /etc/libvirt:/etc/libvirt
+        - /run/libvirt:/run/libvirt:shared
+        - /var/lib/libvirt:/var/lib/libvirt:shared
+        - /var/cache/libvirt:/var/cache/libvirt:shared
+        - /var/log/libvirt/qemu:/var/log/libvirt/qemu:ro
+        - /var/lib/vhost_sockets:/var/lib/vhost_sockets
+        - /var/lib/nova:/var/lib/nova:shared
+        - /sys/fs/selinux:/sys/fs/selinux
+        - /etc/selinux/config:/etc/selinux/config:ro
+      config_id: tripleo_step3
+      container_name: nova_libvirt
+      managed_by: tripleo_ansible
+    name: nova_libvirt
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/libvirt
+      name: _var_log_containers_libvirt___var_log_libvirt
+    - mountPath: /etc/ssh/ssh_known_hosts
+      name: _etc_ssh_ssh_known_hosts___etc_ssh_ssh_known_hosts
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova_libvirt.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova_libvirt___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /nova_libvirt_launcher.sh
+      name: _var_lib_container-config-scripts_nova_libvirt_launcher.sh___nova_libvirt_launcher.sh
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src-ceph
+      name: _var_lib_tripleo-config_ceph___var_lib_kolla_config_files_src-ceph
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /run
+      name: _run___run
+    - mountPath: /sys/fs/cgroup
+      name: _sys_fs_cgroup___sys_fs_cgroup
+    - mountPath: /etc/libvirt
+      name: _etc_libvirt___etc_libvirt
+    - mountPath: /run/libvirt
+      name: _run_libvirt___run_libvirt
+    - mountPath: /var/lib/libvirt
+      name: _var_lib_libvirt___var_lib_libvirt
+    - mountPath: /var/cache/libvirt
+      name: _var_cache_libvirt___var_cache_libvirt
+    - mountPath: /var/log/libvirt/qemu
+      name: _var_log_libvirt_qemu___var_log_libvirt_qemu
+      readOnly: true
+    - mountPath: /var/lib/vhost_sockets
+      name: _var_lib_vhost_sockets___var_lib_vhost_sockets
+    - mountPath: /var/lib/nova
+      name: _var_lib_nova___var_lib_nova
+    - mountPath: /sys/fs/selinux
+      name: _sys_fs_selinux___sys_fs_selinux
+    - mountPath: /etc/selinux/config
+      name: _etc_selinux_config___etc_selinux_config
+      readOnly: true
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/libvirt
+    name: _var_log_containers_libvirt___var_log_libvirt
+  - hostPath:
+      path: /etc/ssh/ssh_known_hosts
+    name: _etc_ssh_ssh_known_hosts___etc_ssh_ssh_known_hosts
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova_libvirt.json
+    name: _var_lib_kolla_config_files_nova_libvirt.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/nova_libvirt
+    name: _var_lib_config-data_puppet-generated_nova_libvirt___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/container-config-scripts/nova_libvirt_launcher.sh
+    name: _var_lib_container-config-scripts_nova_libvirt_launcher.sh___nova_libvirt_launcher.sh
+  - hostPath:
+      path: /var/lib/tripleo-config/ceph
+    name: _var_lib_tripleo-config_ceph___var_lib_kolla_config_files_src-ceph
+  - hostPath:
+      path: /lib/modules
+    name: _lib_modules___lib_modules
+  - hostPath:
+      path: /dev
+    name: _dev___dev
+  - hostPath:
+      path: /run
+    name: _run___run
+  - hostPath:
+      path: /sys/fs/cgroup
+    name: _sys_fs_cgroup___sys_fs_cgroup
+  - hostPath:
+      path: /etc/libvirt
+    name: _etc_libvirt___etc_libvirt
+  - hostPath:
+      path: /run/libvirt
+    name: _run_libvirt___run_libvirt
+  - hostPath:
+      path: /var/lib/libvirt
+    name: _var_lib_libvirt___var_lib_libvirt
+  - hostPath:
+      path: /var/cache/libvirt
+    name: _var_cache_libvirt___var_cache_libvirt
+  - hostPath:
+      path: /var/log/libvirt/qemu
+    name: _var_log_libvirt_qemu___var_log_libvirt_qemu
+  - hostPath:
+      path: /var/lib/vhost_sockets
+    name: _var_lib_vhost_sockets___var_lib_vhost_sockets
+  - hostPath:
+      path: /var/lib/nova
+    name: _var_lib_nova___var_lib_nova
+  - hostPath:
+      path: /sys/fs/selinux
+    name: _sys_fs_selinux___sys_fs_selinux
+  - hostPath:
+      path: /etc/selinux/config
+    name: _etc_selinux_config___etc_selinux_config

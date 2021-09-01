@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step4
+  name: tripleo_step4-step-92
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 575eac83ac61b6b31c0af25a08e1cafc
+    image: 192.168.24.1:8787/tripleomaster/openstack-ironic-inspector:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 575eac83ac61b6b31c0af25a08e1cafc
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 192.168.24.1:8787/tripleomaster/openstack-ironic-inspector:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        privileged: true
+        restart: always
+        start_order: 92
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/ironic_inspector.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/ironic_inspector:/var/lib/kolla/config_files/src:ro
+        - /var/lib/ironic:/var/lib/ironic:shared,z
+        - /var/log/containers/ironic-inspector:/var/log/ironic-inspector:z
+        - /var/lib/ironic-inspector/dhcp-hostsdir:/var/lib/ironic-inspector/dhcp-hostsdir:shared,z
+      config_id: tripleo_step4
+      container_name: ironic_inspector
+      managed_by: tripleo_ansible
+    name: ironic_inspector
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_ironic_inspector.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_ironic_inspector___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/lib/ironic
+      name: _var_lib_ironic___var_lib_ironic
+    - mountPath: /var/log/ironic-inspector
+      name: _var_log_containers_ironic-inspector___var_log_ironic-inspector
+    - mountPath: /var/lib/ironic-inspector/dhcp-hostsdir
+      name: _var_lib_ironic-inspector_dhcp-hostsdir___var_lib_ironic-inspector_dhcp-hostsdir
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/lib/kolla/config_files/ironic_inspector.json
+    name: _var_lib_kolla_config_files_ironic_inspector.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/ironic_inspector
+    name: _var_lib_config-data_puppet-generated_ironic_inspector___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/ironic
+    name: _var_lib_ironic___var_lib_ironic
+  - hostPath:
+      path: /var/log/containers/ironic-inspector
+    name: _var_log_containers_ironic-inspector___var_log_ironic-inspector
+  - hostPath:
+      path: /var/lib/ironic-inspector/dhcp-hostsdir
+    name: _var_lib_ironic-inspector_dhcp-hostsdir___var_lib_ironic-inspector_dhcp-hostsdir

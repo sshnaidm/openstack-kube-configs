@@ -1,0 +1,309 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step4
+  name: tripleo_step4-step-1
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    image: 38.102.83.65:5001/tripleomaster/openstack-ovn-controller:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        depends_on:
+        - openvswitch.service
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+        healthcheck:
+          test: /openstack/healthcheck 6642
+        image: 38.102.83.65:5001/tripleomaster/openstack-ovn-controller:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: true
+        restart: always
+        start_order: 1
+        user: root
+        volumes:
+        - /var/lib/kolla/config_files/ovn_controller.json:/var/lib/kolla/config_files/config.json:ro
+        - /lib/modules:/lib/modules:ro
+        - /run:/run
+        - /var/lib/openvswitch/ovn:/run/ovn:shared,z
+        - /var/log/containers/openvswitch:/var/log/openvswitch:z
+        - /var/log/containers/openvswitch:/var/log/ovn:z
+      config_id: tripleo_step4
+      container_name: ovn_controller
+      managed_by: tripleo_ansible
+    name: ovn_controller
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_ovn_controller.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run
+      name: _run___run
+    - mountPath: /run/ovn
+      name: _var_lib_openvswitch_ovn___run_ovn
+    - mountPath: /var/log/openvswitch
+      name: _var_log_containers_openvswitch___var_log_openvswitch
+    - mountPath: /var/log/ovn
+      name: _var_log_containers_openvswitch___var_log_ovn
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: f4a0c0a54b938242362c895b318dd03d
+    image: 38.102.83.65:5001/tripleomaster/openstack-neutron-metadata-agent-ovn:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: f4a0c0a54b938242362c895b318dd03d
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-neutron-metadata-agent-ovn:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        pid: host
+        privileged: true
+        restart: always
+        start_order: 1
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/lib/kolla/config_files/ovn_metadata_agent.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/neutron:/var/lib/kolla/config_files/src:ro
+        - /lib/modules:/lib/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+        - /var/lib/neutron:/var/lib/neutron:shared,z
+        - /run/netns:/run/netns:shared
+        - /var/lib/neutron/kill_scripts:/etc/neutron/kill_scripts:shared,z
+        - /var/lib/neutron/ovn_metadata_haproxy_wrapper:/usr/local/bin/haproxy:ro
+      config_id: tripleo_step4
+      container_name: ovn_metadata_agent
+      managed_by: tripleo_ansible
+    name: ovn_metadata_agent
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_ovn_metadata_agent.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+    - mountPath: /var/lib/neutron
+      name: _var_lib_neutron___var_lib_neutron
+    - mountPath: /run/netns
+      name: _run_netns___run_netns
+    - mountPath: /etc/neutron/kill_scripts
+      name: _var_lib_neutron_kill_scripts___etc_neutron_kill_scripts
+    - mountPath: /usr/local/bin/haproxy
+      name: _var_lib_neutron_ovn_metadata_haproxy_wrapper___usr_local_bin_haproxy
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 11caea3f85de66dbd72d400771e7bbb1
+    image: 38.102.83.65:5001/tripleomaster/openstack-placement-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 11caea3f85de66dbd72d400771e7bbb1
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-placement-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        start_order: 1
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/placement:/var/log/placement:z
+        - /var/log/containers/httpd/placement:/var/log/httpd:z
+        - /var/lib/kolla/config_files/placement_api.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/placement:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step4
+      container_name: placement_api
+      managed_by: tripleo_ansible
+    name: placement_api
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/placement
+      name: _var_log_containers_placement___var_log_placement
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_placement___var_log_httpd
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_placement_api.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_placement___var_lib_kolla_config_files_src
+      readOnly: true
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /var/lib/kolla/config_files/ovn_controller.json
+    name: _var_lib_kolla_config_files_ovn_controller.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /lib/modules
+    name: _lib_modules___lib_modules
+  - hostPath:
+      path: /run
+    name: _run___run
+  - hostPath:
+      path: /var/lib/openvswitch/ovn
+    name: _var_lib_openvswitch_ovn___run_ovn
+  - hostPath:
+      path: /var/log/containers/openvswitch
+    name: _var_log_containers_openvswitch___var_log_openvswitch
+  - hostPath:
+      path: /var/log/containers/openvswitch
+    name: _var_log_containers_openvswitch___var_log_ovn
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/neutron
+    name: _var_log_containers_neutron___var_log_neutron
+  - hostPath:
+      path: /var/lib/kolla/config_files/ovn_metadata_agent.json
+    name: _var_lib_kolla_config_files_ovn_metadata_agent.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/neutron
+    name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /run/openvswitch
+    name: _run_openvswitch___run_openvswitch
+  - hostPath:
+      path: /var/lib/neutron
+    name: _var_lib_neutron___var_lib_neutron
+  - hostPath:
+      path: /run/netns
+    name: _run_netns___run_netns
+  - hostPath:
+      path: /var/lib/neutron/kill_scripts
+    name: _var_lib_neutron_kill_scripts___etc_neutron_kill_scripts
+  - hostPath:
+      path: /var/lib/neutron/ovn_metadata_haproxy_wrapper
+    name: _var_lib_neutron_ovn_metadata_haproxy_wrapper___usr_local_bin_haproxy
+  - hostPath:
+      path: /var/log/containers/placement
+    name: _var_log_containers_placement___var_log_placement
+  - hostPath:
+      path: /var/log/containers/httpd/placement
+    name: _var_log_containers_httpd_placement___var_log_httpd
+  - hostPath:
+      path: /var/lib/kolla/config_files/placement_api.json
+    name: _var_lib_kolla_config_files_placement_api.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/placement
+    name: _var_lib_config-data_puppet-generated_placement___var_lib_kolla_config_files_src

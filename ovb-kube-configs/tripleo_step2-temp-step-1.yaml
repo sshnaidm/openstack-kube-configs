@@ -1,0 +1,326 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step2
+  name: tripleo_step2-temp-step-1
+spec:
+  containers:
+  - command: &id001
+    - /bin/bash
+    - -c
+    - chown -R keystone:keystone /var/log/keystone
+    image: 192.168.24.1:8787/tripleomaster/openstack-keystone:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        command: *id001
+        image: 192.168.24.1:8787/tripleomaster/openstack-keystone:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: none
+        start_order: 1
+        user: root
+        volumes:
+        - /var/log/containers/keystone:/var/log/keystone:z
+        - /var/log/containers/httpd/keystone:/var/log/httpd:z
+      config_id: tripleo_step2
+      container_name: keystone_init_log
+      managed_by: tripleo_ansible
+      temporary: true
+    name: keystone_init_log
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/keystone
+      name: _var_log_containers_keystone___var_log_keystone
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_keystone___var_log_httpd
+  - command: &id002
+    - /container_puppet_apply.sh
+    - '4'
+    - file
+    - include ::tripleo::profile::base::neutron::l3_agent_wrappers
+    image: 192.168.24.1:8787/tripleomaster/openstack-neutron-l3-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        command: *id002
+        detach: false
+        image: 192.168.24.1:8787/tripleomaster/openstack-neutron-l3-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        pid: host
+        start_order: 1
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /var/lib/container-config-scripts/container_puppet_apply.sh:/container_puppet_apply.sh:ro
+        - /etc/puppet:/tmp/puppet-etc:ro
+        - /usr/share/openstack-puppet/modules:/usr/share/openstack-puppet/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+        - /var/lib/neutron:/var/lib/neutron:shared,z
+      config_id: tripleo_step2
+      container_name: create_keepalived_wrapper
+      managed_by: tripleo_ansible
+      temporary: true
+    name: create_keepalived_wrapper
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /container_puppet_apply.sh
+      name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+      readOnly: true
+    - mountPath: /tmp/puppet-etc
+      name: _etc_puppet___tmp_puppet-etc
+      readOnly: true
+    - mountPath: /usr/share/openstack-puppet/modules
+      name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+    - mountPath: /var/lib/neutron
+      name: _var_lib_neutron___var_lib_neutron
+  - command: &id003
+    - /container_puppet_apply.sh
+    - '4'
+    - file
+    - include ::tripleo::profile::base::neutron::dhcp_agent_wrappers
+    image: 192.168.24.1:8787/tripleomaster/openstack-neutron-dhcp-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        command: *id003
+        detach: false
+        image: 192.168.24.1:8787/tripleomaster/openstack-neutron-dhcp-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        pid: host
+        start_order: 1
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /var/lib/container-config-scripts/container_puppet_apply.sh:/container_puppet_apply.sh:ro
+        - /etc/puppet:/tmp/puppet-etc:ro
+        - /usr/share/openstack-puppet/modules:/usr/share/openstack-puppet/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+        - /var/lib/neutron:/var/lib/neutron:shared,z
+      config_id: tripleo_step2
+      container_name: create_dnsmasq_wrapper
+      managed_by: tripleo_ansible
+      temporary: true
+    name: create_dnsmasq_wrapper
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /container_puppet_apply.sh
+      name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+      readOnly: true
+    - mountPath: /tmp/puppet-etc
+      name: _etc_puppet___tmp_puppet-etc
+      readOnly: true
+    - mountPath: /usr/share/openstack-puppet/modules
+      name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+    - mountPath: /var/lib/neutron
+      name: _var_lib_neutron___var_lib_neutron
+  - command: &id004
+    - bash
+    - -ec
+    - 'if [ -e /var/lib/mysql/mysql ]; then exit 0; fi
+
+      echo -e "\n[mysqld]\nwsrep_provider=none" >> /etc/my.cnf
+
+      kolla_set_configs
+
+      sudo -u mysql -E kolla_extend_start
+
+      timeout ${DB_MAX_TIMEOUT} /bin/bash -c ''while pgrep -af /usr/bin/mysqld_safe
+      | grep -q -v grep; do sleep 1; done''
+
+      mysqld_safe --skip-networking --wsrep-on=OFF &
+
+      timeout ${DB_MAX_TIMEOUT} /bin/bash -c ''until mysqladmin -uroot -p"${DB_ROOT_PASSWORD}"
+      ping 2>/dev/null; do sleep 1; done''
+
+      mysql -uroot -p"${DB_ROOT_PASSWORD}" -e "CREATE USER ''mysql''@''localhost'';"
+
+      mysql -uroot -p"${DB_ROOT_PASSWORD}" -e "REVOKE ALL PRIVILEGES, GRANT OPTION
+      FROM ''mysql''@''localhost'';"
+
+      timeout ${DB_MAX_TIMEOUT} mysqladmin -uroot -p"${DB_ROOT_PASSWORD}" shutdown'
+    env:
+    - name: DB_MAX_TIMEOUT
+      value: 60
+    - name: DB_ROOT_PASSWORD
+      value: nouLD8p0Ke
+    - name: KOLLA_BOOTSTRAP
+      value: true
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: f7aee8d91a3d2893347665dd9b977e70
+    image: 192.168.24.1:8787/tripleomaster/openstack-mariadb:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        command: *id004
+        detach: false
+        environment:
+          DB_MAX_TIMEOUT: 60
+          DB_ROOT_PASSWORD: nouLD8p0Ke
+          KOLLA_BOOTSTRAP: true
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: f7aee8d91a3d2893347665dd9b977e70
+        image: 192.168.24.1:8787/tripleomaster/openstack-mariadb:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        start_order: 1
+        user: root
+        volumes:
+        - /var/lib/kolla/config_files/mysql.json:/var/lib/kolla/config_files/config.json
+        - /var/lib/config-data/puppet-generated/mysql:/var/lib/kolla/config_files/src:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/hosts:/etc/hosts:ro
+        - /var/lib/mysql:/var/lib/mysql
+        - /var/log/containers/mysql:/var/log/mariadb
+      config_id: tripleo_step2
+      container_name: mysql_bootstrap
+      managed_by: tripleo_ansible
+      temporary: true
+    name: mysql_bootstrap
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_mysql.json___var_lib_kolla_config_files_config.json
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_mysql___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /var/lib/mysql
+      name: _var_lib_mysql___var_lib_mysql
+    - mountPath: /var/log/mariadb
+      name: _var_log_containers_mysql___var_log_mariadb
+  hostNetwork: true
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /var/log/containers/keystone
+    name: _var_log_containers_keystone___var_log_keystone
+  - hostPath:
+      path: /var/log/containers/httpd/keystone
+    name: _var_log_containers_httpd_keystone___var_log_httpd
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /var/lib/container-config-scripts/container_puppet_apply.sh
+    name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___tmp_puppet-etc
+  - hostPath:
+      path: /usr/share/openstack-puppet/modules
+    name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+  - hostPath:
+      path: /run/openvswitch
+    name: _run_openvswitch___run_openvswitch
+  - hostPath:
+      path: /var/lib/neutron
+    name: _var_lib_neutron___var_lib_neutron
+  - hostPath:
+      path: /var/lib/kolla/config_files/mysql.json
+    name: _var_lib_kolla_config_files_mysql.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/mysql
+    name: _var_lib_config-data_puppet-generated_mysql___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/mysql
+    name: _var_lib_mysql___var_lib_mysql
+  - hostPath:
+      path: /var/log/containers/mysql
+    name: _var_log_containers_mysql___var_log_mariadb

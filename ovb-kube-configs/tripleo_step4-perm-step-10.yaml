@@ -1,0 +1,472 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step4
+  name: tripleo_step4-step-10
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: a196bc498338e13acb71495bbaaddcd6
+    image: 192.168.24.1:8787/tripleomaster/openstack-neutron-l3-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        depends_on:
+        - openvswitch.service
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: a196bc498338e13acb71495bbaaddcd6
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 192.168.24.1:8787/tripleomaster/openstack-neutron-l3-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        pid: host
+        privileged: true
+        restart: always
+        start_order: 10
+        ulimit:
+        - nofile=16384
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/lib/kolla/config_files/neutron_l3_agent.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/neutron:/var/lib/kolla/config_files/src:ro
+        - /lib/modules:/lib/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+        - /var/lib/neutron:/var/lib/neutron:shared,z
+        - /run/netns:/run/netns:shared
+        - /var/lib/neutron/kill_scripts:/etc/neutron/kill_scripts:shared,z
+        - /var/lib/neutron/keepalived_wrapper:/usr/local/bin/keepalived:ro
+        - /var/lib/neutron/l3_haproxy_wrapper:/usr/local/bin/haproxy:ro
+        - /var/lib/neutron/dibbler_wrapper:/usr/local/bin/dibbler_client:ro
+      config_id: tripleo_step4
+      container_name: neutron_l3_agent
+      managed_by: tripleo_ansible
+    name: neutron_l3_agent
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_neutron_l3_agent.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+    - mountPath: /var/lib/neutron
+      name: _var_lib_neutron___var_lib_neutron
+    - mountPath: /run/netns
+      name: _run_netns___run_netns
+    - mountPath: /etc/neutron/kill_scripts
+      name: _var_lib_neutron_kill_scripts___etc_neutron_kill_scripts
+    - mountPath: /usr/local/bin/keepalived
+      name: _var_lib_neutron_keepalived_wrapper___usr_local_bin_keepalived
+      readOnly: true
+    - mountPath: /usr/local/bin/haproxy
+      name: _var_lib_neutron_l3_haproxy_wrapper___usr_local_bin_haproxy
+      readOnly: true
+    - mountPath: /usr/local/bin/dibbler_client
+      name: _var_lib_neutron_dibbler_wrapper___usr_local_bin_dibbler_client
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: a196bc498338e13acb71495bbaaddcd6
+    image: 192.168.24.1:8787/tripleomaster/openstack-neutron-dhcp-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        depends_on:
+        - openvswitch.service
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: a196bc498338e13acb71495bbaaddcd6
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 192.168.24.1:8787/tripleomaster/openstack-neutron-dhcp-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        pid: host
+        privileged: true
+        restart: always
+        security_opt:
+        - label=disable
+        start_order: 10
+        ulimit:
+        - nofile=16384
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/lib/kolla/config_files/neutron_dhcp.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/neutron:/var/lib/kolla/config_files/src:ro
+        - /lib/modules:/lib/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+        - /var/lib/neutron:/var/lib/neutron:shared,z
+        - /run/netns:/run/netns:shared
+        - /var/lib/neutron/kill_scripts:/etc/neutron/kill_scripts:shared,z
+        - /var/lib/neutron/dnsmasq_wrapper:/usr/local/bin/dnsmasq:ro
+        - /var/lib/neutron/dhcp_haproxy_wrapper:/usr/local/bin/haproxy:ro
+      config_id: tripleo_step4
+      container_name: neutron_dhcp
+      managed_by: tripleo_ansible
+    name: neutron_dhcp
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_neutron_dhcp.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+    - mountPath: /var/lib/neutron
+      name: _var_lib_neutron___var_lib_neutron
+    - mountPath: /run/netns
+      name: _run_netns___run_netns
+    - mountPath: /etc/neutron/kill_scripts
+      name: _var_lib_neutron_kill_scripts___etc_neutron_kill_scripts
+    - mountPath: /usr/local/bin/dnsmasq
+      name: _var_lib_neutron_dnsmasq_wrapper___usr_local_bin_dnsmasq
+      readOnly: true
+    - mountPath: /usr/local/bin/haproxy
+      name: _var_lib_neutron_dhcp_haproxy_wrapper___usr_local_bin_haproxy
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 331566284ca2479bc1d8b7b78a02e844
+    image: 192.168.24.1:8787/tripleomaster/openstack-ironic-api:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 331566284ca2479bc1d8b7b78a02e844
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 192.168.24.1:8787/tripleomaster/openstack-ironic-api:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        restart: always
+        start_order: 10
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/ironic_api.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/ironic_api:/var/lib/kolla/config_files/src:ro
+        - /var/log/containers/ironic:/var/log/ironic:z
+        - /var/log/containers/httpd/ironic-api:/var/log/httpd:z
+      config_id: tripleo_step4
+      container_name: ironic_api
+      managed_by: tripleo_ansible
+    name: ironic_api
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_ironic_api.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_ironic_api___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/log/ironic
+      name: _var_log_containers_ironic___var_log_ironic
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_ironic-api___var_log_httpd
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: a196bc498338e13acb71495bbaaddcd6
+    image: 192.168.24.1:8787/tripleomaster/openstack-neutron-openvswitch-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        depends_on:
+        - openvswitch.service
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: a196bc498338e13acb71495bbaaddcd6
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 192.168.24.1:8787/tripleomaster/openstack-neutron-openvswitch-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        pid: host
+        privileged: true
+        restart: always
+        security_opt:
+        - label=disable
+        start_order: 10
+        ulimit:
+        - nofile=16384
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/lib/kolla/config_files/neutron_ovs_agent.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/neutron:/var/lib/kolla/config_files/src:ro
+        - /var/lib/container-config-scripts/neutron_ovs_agent_launcher.sh:/neutron_ovs_agent_launcher.sh:ro
+        - /lib/modules:/lib/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+      config_id: tripleo_step4
+      container_name: neutron_ovs_agent
+      managed_by: tripleo_ansible
+    name: neutron_ovs_agent
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_neutron_ovs_agent.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /neutron_ovs_agent_launcher.sh
+      name: _var_lib_container-config-scripts_neutron_ovs_agent_launcher.sh___neutron_ovs_agent_launcher.sh
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/neutron
+    name: _var_log_containers_neutron___var_log_neutron
+  - hostPath:
+      path: /var/lib/kolla/config_files/neutron_l3_agent.json
+    name: _var_lib_kolla_config_files_neutron_l3_agent.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/neutron
+    name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /lib/modules
+    name: _lib_modules___lib_modules
+  - hostPath:
+      path: /run/openvswitch
+    name: _run_openvswitch___run_openvswitch
+  - hostPath:
+      path: /var/lib/neutron
+    name: _var_lib_neutron___var_lib_neutron
+  - hostPath:
+      path: /run/netns
+    name: _run_netns___run_netns
+  - hostPath:
+      path: /var/lib/neutron/kill_scripts
+    name: _var_lib_neutron_kill_scripts___etc_neutron_kill_scripts
+  - hostPath:
+      path: /var/lib/neutron/keepalived_wrapper
+    name: _var_lib_neutron_keepalived_wrapper___usr_local_bin_keepalived
+  - hostPath:
+      path: /var/lib/neutron/l3_haproxy_wrapper
+    name: _var_lib_neutron_l3_haproxy_wrapper___usr_local_bin_haproxy
+  - hostPath:
+      path: /var/lib/neutron/dibbler_wrapper
+    name: _var_lib_neutron_dibbler_wrapper___usr_local_bin_dibbler_client
+  - hostPath:
+      path: /var/lib/kolla/config_files/neutron_dhcp.json
+    name: _var_lib_kolla_config_files_neutron_dhcp.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/neutron/dnsmasq_wrapper
+    name: _var_lib_neutron_dnsmasq_wrapper___usr_local_bin_dnsmasq
+  - hostPath:
+      path: /var/lib/neutron/dhcp_haproxy_wrapper
+    name: _var_lib_neutron_dhcp_haproxy_wrapper___usr_local_bin_haproxy
+  - hostPath:
+      path: /var/lib/kolla/config_files/ironic_api.json
+    name: _var_lib_kolla_config_files_ironic_api.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/ironic_api
+    name: _var_lib_config-data_puppet-generated_ironic_api___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/log/containers/ironic
+    name: _var_log_containers_ironic___var_log_ironic
+  - hostPath:
+      path: /var/log/containers/httpd/ironic-api
+    name: _var_log_containers_httpd_ironic-api___var_log_httpd
+  - hostPath:
+      path: /var/lib/kolla/config_files/neutron_ovs_agent.json
+    name: _var_lib_kolla_config_files_neutron_ovs_agent.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/container-config-scripts/neutron_ovs_agent_launcher.sh
+    name: _var_lib_container-config-scripts_neutron_ovs_agent_launcher.sh___neutron_ovs_agent_launcher.sh

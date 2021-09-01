@@ -1,0 +1,208 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step5
+  name: tripleo_step5-step-3
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: LIBGUESTFS_BACKEND
+      value: direct
+    - name: TRIPLEO_CONFIG_HASH
+      value: e90261ef6db6faac343357cae0746fd5-4d1b89d476636748267f959151a9bca6
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-compute:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        depends_on:
+        - tripleo_nova_libvirt.service
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          LIBGUESTFS_BACKEND: direct
+          TRIPLEO_CONFIG_HASH: e90261ef6db6faac343357cae0746fd5-4d1b89d476636748267f959151a9bca6
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-compute:2fa7870e5aa16053f63f8b63df4f955b
+        ipc: host
+        net: host
+        privileged: true
+        restart: always
+        start_order: 3
+        ulimit:
+        - nofile=131072
+        - memlock=67108864
+        user: nova
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/nova:/var/log/nova
+        - /etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro
+        - /var/lib/kolla/config_files/nova_compute.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova_libvirt:/var/lib/kolla/config_files/src:ro
+        - /var/lib/config-data/puppet-generated/iscsid/etc/iscsi:/var/lib/kolla/config_files/src-iscsid:ro
+        - /var/lib/tripleo-config/ceph:/var/lib/kolla/config_files/src-ceph:ro
+        - /dev:/dev
+        - /lib/modules:/lib/modules:ro
+        - /run:/run
+        - /var/lib/iscsi:/var/lib/iscsi:z
+        - /var/lib/libvirt:/var/lib/libvirt:shared
+        - /sys/class/net:/sys/class/net
+        - /sys/bus/pci:/sys/bus/pci
+        - /boot:/boot:ro
+        - /var/lib/nova:/var/lib/nova:shared
+      config_id: tripleo_step5
+      container_name: nova_compute
+      managed_by: tripleo_ansible
+    name: nova_compute
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsGroup: 42436
+      runAsUser: 42436
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /etc/ssh/ssh_known_hosts
+      name: _etc_ssh_ssh_known_hosts___etc_ssh_ssh_known_hosts
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova_compute.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova_libvirt___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src-iscsid
+      name: _var_lib_config-data_puppet-generated_iscsid_etc_iscsi___var_lib_kolla_config_files_src-iscsid
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src-ceph
+      name: _var_lib_tripleo-config_ceph___var_lib_kolla_config_files_src-ceph
+      readOnly: true
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run
+      name: _run___run
+    - mountPath: /var/lib/iscsi
+      name: _var_lib_iscsi___var_lib_iscsi
+    - mountPath: /var/lib/libvirt
+      name: _var_lib_libvirt___var_lib_libvirt
+    - mountPath: /sys/class/net
+      name: _sys_class_net___sys_class_net
+    - mountPath: /sys/bus/pci
+      name: _sys_bus_pci___sys_bus_pci
+    - mountPath: /boot
+      name: _boot___boot
+      readOnly: true
+    - mountPath: /var/lib/nova
+      name: _var_lib_nova___var_lib_nova
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/nova
+    name: _var_log_containers_nova___var_log_nova
+  - hostPath:
+      path: /etc/ssh/ssh_known_hosts
+    name: _etc_ssh_ssh_known_hosts___etc_ssh_ssh_known_hosts
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova_compute.json
+    name: _var_lib_kolla_config_files_nova_compute.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/nova_libvirt
+    name: _var_lib_config-data_puppet-generated_nova_libvirt___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/iscsid/etc/iscsi
+    name: _var_lib_config-data_puppet-generated_iscsid_etc_iscsi___var_lib_kolla_config_files_src-iscsid
+  - hostPath:
+      path: /var/lib/tripleo-config/ceph
+    name: _var_lib_tripleo-config_ceph___var_lib_kolla_config_files_src-ceph
+  - hostPath:
+      path: /dev
+    name: _dev___dev
+  - hostPath:
+      path: /lib/modules
+    name: _lib_modules___lib_modules
+  - hostPath:
+      path: /run
+    name: _run___run
+  - hostPath:
+      path: /var/lib/iscsi
+    name: _var_lib_iscsi___var_lib_iscsi
+  - hostPath:
+      path: /var/lib/libvirt
+    name: _var_lib_libvirt___var_lib_libvirt
+  - hostPath:
+      path: /sys/class/net
+    name: _sys_class_net___sys_class_net
+  - hostPath:
+      path: /sys/bus/pci
+    name: _sys_bus_pci___sys_bus_pci
+  - hostPath:
+      path: /boot
+    name: _boot___boot
+  - hostPath:
+      path: /var/lib/nova
+    name: _var_lib_nova___var_lib_nova

@@ -1,0 +1,208 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step4
+  name: tripleo_step4-temp-step-0
+spec:
+  containers:
+  - command: &id001
+    - /bin/bash
+    - -c
+    - CMS_OPTS=$(hiera ovn::controller::ovn_cms_options -c /etc/puppet/hiera.yaml);  if
+      [ X"$CMS_OPTS" !=  X ]; then ovs-vsctl set open . external_ids:ovn-cms-options=$CMS_OPTS;else
+      ovs-vsctl remove open . external_ids ovn-cms-options; fi
+    env:
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    image: 38.102.83.65:5001/tripleomaster/openstack-ovn-controller:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id001
+        detach: false
+        environment:
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-ovn-controller:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: true
+        start_order: 0
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /lib/modules:/lib/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+      config_id: tripleo_step4
+      container_name: configure_cms_options
+      managed_by: tripleo_ansible
+      temporary: true
+    name: configure_cms_options
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+  - command: &id002
+    - /container_puppet_apply.sh
+    - '4'
+    - exec
+    - include tripleo::profile::base::neutron::ovn_metadata
+    env:
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    image: 38.102.83.65:5001/tripleomaster/openstack-neutron-metadata-agent-ovn:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id002
+        detach: false
+        environment:
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-neutron-metadata-agent-ovn:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: true
+        start_order: 0
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /var/lib/container-config-scripts/container_puppet_apply.sh:/container_puppet_apply.sh:ro
+        - /etc/puppet:/tmp/puppet-etc:ro
+        - /usr/share/openstack-puppet/modules:/usr/share/openstack-puppet/modules:ro
+        - /lib/modules:/lib/modules:ro
+        - /run/openvswitch:/run/openvswitch:shared,z
+      config_id: tripleo_step4
+      container_name: setup_ovs_manager
+      managed_by: tripleo_ansible
+      temporary: true
+    name: setup_ovs_manager
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /container_puppet_apply.sh
+      name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+      readOnly: true
+    - mountPath: /tmp/puppet-etc
+      name: _etc_puppet___tmp_puppet-etc
+      readOnly: true
+    - mountPath: /usr/share/openstack-puppet/modules
+      name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /run/openvswitch
+      name: _run_openvswitch___run_openvswitch
+  hostNetwork: true
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /lib/modules
+    name: _lib_modules___lib_modules
+  - hostPath:
+      path: /run/openvswitch
+    name: _run_openvswitch___run_openvswitch
+  - hostPath:
+      path: /var/lib/container-config-scripts/container_puppet_apply.sh
+    name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___tmp_puppet-etc
+  - hostPath:
+      path: /usr/share/openstack-puppet/modules
+    name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules

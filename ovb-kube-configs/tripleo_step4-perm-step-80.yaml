@@ -1,0 +1,232 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step4
+  name: tripleo_step4-step-80
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: a196bc498338e13acb71495bbaaddcd6
+    image: 192.168.24.1:8787/tripleomaster/openstack-ironic-neutron-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: a196bc498338e13acb71495bbaaddcd6
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 192.168.24.1:8787/tripleomaster/openstack-ironic-neutron-agent:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        pid: host
+        privileged: true
+        restart: always
+        start_order: 80
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/lib/kolla/config_files/ironic_neutron_agent.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/neutron:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step4
+      container_name: ironic_neutron_agent
+      managed_by: tripleo_ansible
+    name: ironic_neutron_agent
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_ironic_neutron_agent.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: ef7c434800b5fce1e64e794d02d73127
+    image: 192.168.24.1:8787/tripleomaster/openstack-ironic-conductor:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: ef7c434800b5fce1e64e794d02d73127
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 192.168.24.1:8787/tripleomaster/openstack-ironic-conductor:2fa7870e5aa16053f63f8b63df4f955b-updated-20210901075107
+        net: host
+        privileged: true
+        restart: always
+        start_order: 80
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/ironic_conductor.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/ironic:/var/lib/kolla/config_files/src:ro
+        - /lib/modules:/lib/modules:ro
+        - /sys:/sys
+        - /dev:/dev
+        - /run:/run
+        - /var/lib/ironic:/var/lib/ironic:z
+        - /var/log/containers/ironic:/var/log/ironic:z
+      config_id: tripleo_step4
+      container_name: ironic_conductor
+      managed_by: tripleo_ansible
+    name: ironic_conductor
+    securityContext:
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_ironic_conductor.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_ironic___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /lib/modules
+      name: _lib_modules___lib_modules
+      readOnly: true
+    - mountPath: /sys
+      name: _sys___sys
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /run
+      name: _run___run
+    - mountPath: /var/lib/ironic
+      name: _var_lib_ironic___var_lib_ironic
+    - mountPath: /var/log/ironic
+      name: _var_log_containers_ironic___var_log_ironic
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/neutron
+    name: _var_log_containers_neutron___var_log_neutron
+  - hostPath:
+      path: /var/lib/kolla/config_files/ironic_neutron_agent.json
+    name: _var_lib_kolla_config_files_ironic_neutron_agent.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/neutron
+    name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/kolla/config_files/ironic_conductor.json
+    name: _var_lib_kolla_config_files_ironic_conductor.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/ironic
+    name: _var_lib_config-data_puppet-generated_ironic___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /lib/modules
+    name: _lib_modules___lib_modules
+  - hostPath:
+      path: /sys
+    name: _sys___sys
+  - hostPath:
+      path: /dev
+    name: _dev___dev
+  - hostPath:
+      path: /run
+    name: _run___run
+  - hostPath:
+      path: /var/lib/ironic
+    name: _var_lib_ironic___var_lib_ironic
+  - hostPath:
+      path: /var/log/containers/ironic
+    name: _var_log_containers_ironic___var_log_ironic

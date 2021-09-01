@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step1
+  name: tripleo_step1-temp-step-0
+spec:
+  containers:
+  - env:
+    - name: KOLLA_BOOTSTRAP
+      value: true
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: RABBITMQ_CLUSTER_COOKIE
+      value: xWbutd1PlwdCp8F7pzhk
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    - name: TRIPLEO_CONFIG_HASH
+      value: 776e0175955b40dcd0494d40493461fc
+    image: 38.102.83.65:5001/tripleomaster/openstack-rabbitmq:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_BOOTSTRAP: true
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          RABBITMQ_CLUSTER_COOKIE: xWbutd1PlwdCp8F7pzhk
+          TRIPLEO_CONFIG_HASH: 776e0175955b40dcd0494d40493461fc
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-rabbitmq:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        start_order: 0
+        volumes:
+        - /var/lib/kolla/config_files/rabbitmq.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/rabbitmq:/var/lib/kolla/config_files/src:ro
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /var/lib/rabbitmq:/var/lib/rabbitmq:z
+      config_id: tripleo_step1
+      container_name: rabbitmq_bootstrap
+      managed_by: tripleo_ansible
+      temporary: true
+    name: rabbitmq_bootstrap
+    securityContext:
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_rabbitmq.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_rabbitmq___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /var/lib/rabbitmq
+      name: _var_lib_rabbitmq___var_lib_rabbitmq
+  - command: &id001
+    - chown
+    - -R
+    - 'mysql:'
+    - /var/lib/mysql
+    image: 38.102.83.65:5001/tripleomaster/openstack-mariadb:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id001
+        detach: false
+        image: 38.102.83.65:5001/tripleomaster/openstack-mariadb:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        start_order: 0
+        user: root
+        volumes:
+        - /var/lib/mysql:/var/lib/mysql:z
+      config_id: tripleo_step1
+      container_name: mysql_data_ownership
+      managed_by: tripleo_ansible
+      temporary: true
+    name: mysql_data_ownership
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: _var_lib_mysql___var_lib_mysql
+  hostNetwork: true
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /var/lib/kolla/config_files/rabbitmq.json
+    name: _var_lib_kolla_config_files_rabbitmq.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/rabbitmq
+    name: _var_lib_config-data_puppet-generated_rabbitmq___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /var/lib/rabbitmq
+    name: _var_lib_rabbitmq___var_lib_rabbitmq
+  - hostPath:
+      path: /var/lib/mysql
+    name: _var_lib_mysql___var_lib_mysql

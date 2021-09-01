@@ -1,0 +1,530 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step2
+  name: tripleo_step2-temp-step-0
+spec:
+  containers:
+  - command: &id001
+    - /bin/bash
+    - -c
+    - chown -R nova:nova /var/log/nova
+    env:
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id001
+        environment:
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/nova:/var/log/nova:z
+        - /var/log/containers/httpd/nova-api:/var/log/httpd:z
+      config_id: tripleo_step2
+      container_name: nova_api_init_logs
+      managed_by: tripleo_ansible
+      temporary: true
+    name: nova_api_init_logs
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_nova-api___var_log_httpd
+  - command: &id002
+    - /bin/bash
+    - -c
+    - chown -R nova:nova /var/log/nova
+    env:
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-conductor:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id002
+        environment:
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-conductor:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/nova:/var/log/nova:z
+      config_id: tripleo_step2
+      container_name: nova_conductor_init_log
+      managed_by: tripleo_ansible
+      temporary: true
+    name: nova_conductor_init_log
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+  - command: &id003
+    - /bin/bash
+    - -c
+    - touch /var/log/horizon/horizon.log ; chown -R apache:apache /var/log/horizon
+      && chmod -R a+rx /etc/openstack-dashboard
+    env:
+    - name: TRIPLEO_CONFIG_HASH
+      value: 5a18f1016ad5534fde6be25745928837
+    image: 38.102.83.65:5001/tripleomaster/openstack-horizon:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id003
+        environment:
+          TRIPLEO_CONFIG_HASH: 5a18f1016ad5534fde6be25745928837
+        image: 38.102.83.65:5001/tripleomaster/openstack-horizon:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        user: root
+        volumes:
+        - /var/log/containers/horizon:/var/log/horizon:z
+        - /var/log/containers/httpd/horizon:/var/log/httpd:z
+        - /var/lib/config-data/puppet-generated/horizon/etc/openstack-dashboard:/etc/openstack-dashboard
+      config_id: tripleo_step2
+      container_name: horizon_fix_perms
+      managed_by: tripleo_ansible
+      temporary: true
+    name: horizon_fix_perms
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/horizon
+      name: _var_log_containers_horizon___var_log_horizon
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_horizon___var_log_httpd
+    - mountPath: /etc/openstack-dashboard
+      name: _var_lib_config-data_puppet-generated_horizon_etc_openstack-dashboard___etc_openstack-dashboard
+  - command: &id004
+    - /bin/bash
+    - -c
+    - chown -R cinder:cinder /var/log/cinder
+    image: 38.102.83.65:5001/tripleomaster/openstack-cinder-scheduler:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id004
+        image: 38.102.83.65:5001/tripleomaster/openstack-cinder-scheduler:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/cinder:/var/log/cinder:z
+      config_id: tripleo_step2
+      container_name: cinder_scheduler_init_logs
+      managed_by: tripleo_ansible
+      temporary: true
+    name: cinder_scheduler_init_logs
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/cinder
+      name: _var_log_containers_cinder___var_log_cinder
+  - command: &id005
+    - /bin/bash
+    - -c
+    - chown -R nova:nova /var/log/nova
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id005
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/nova:/var/log/nova:z
+        - /var/log/containers/httpd/nova-metadata:/var/log/httpd:z
+      config_id: tripleo_step2
+      container_name: nova_metadata_init_logs
+      managed_by: tripleo_ansible
+      temporary: true
+    name: nova_metadata_init_logs
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_nova-metadata___var_log_httpd
+  - command: &id006
+    - /container_puppet_apply.sh
+    - '2'
+    - file,file_line,concat,augeas,galera_ready,mysql_database,mysql_grant,mysql_user
+    - include tripleo::profile::pacemaker::database::mysql_bundle
+    env:
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    - name: TRIPLEO_CONFIG_HASH
+      value: 177f9f3f1d4fd427ca26e6375aa2b787
+    image: 38.102.83.65:5001/tripleomaster/openstack-mariadb:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id006
+        detach: false
+        environment:
+          TRIPLEO_CONFIG_HASH: 177f9f3f1d4fd427ca26e6375aa2b787
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-mariadb:2fa7870e5aa16053f63f8b63df4f955b
+        ipc: host
+        net: host
+        start_order: 0
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /var/lib/container-config-scripts/container_puppet_apply.sh:/container_puppet_apply.sh:ro
+        - /etc/puppet:/tmp/puppet-etc:ro
+        - /usr/share/openstack-puppet/modules:/usr/share/openstack-puppet/modules:ro
+        - /var/lib/mysql:/var/lib/mysql:rw,z
+        - /var/lib/config-data/puppet-generated/mysql/root:/root:rw
+      config_id: tripleo_step2
+      container_name: mysql_wait_bundle
+      managed_by: tripleo_ansible
+      temporary: true
+    name: mysql_wait_bundle
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /container_puppet_apply.sh
+      name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+      readOnly: true
+    - mountPath: /tmp/puppet-etc
+      name: _etc_puppet___tmp_puppet-etc
+      readOnly: true
+    - mountPath: /usr/share/openstack-puppet/modules
+      name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+      readOnly: true
+    - mountPath: /var/lib/mysql
+      name: _var_lib_mysql___var_lib_mysql
+    - mountPath: /root
+      name: _var_lib_config-data_puppet-generated_mysql_root___root
+  - command: &id007
+    - /bin/bash
+    - -c
+    - chown -R glance:glance /var/log/glance
+    image: 38.102.83.65:5001/tripleomaster/openstack-glance-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id007
+        image: 38.102.83.65:5001/tripleomaster/openstack-glance-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/glance:/var/log/glance:z
+        - /var/log/containers/httpd/glance:/var/log/httpd:z
+      config_id: tripleo_step2
+      container_name: glance_init_logs
+      managed_by: tripleo_ansible
+      temporary: true
+    name: glance_init_logs
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/glance
+      name: _var_log_containers_glance___var_log_glance
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_glance___var_log_httpd
+  - command: &id008
+    - /container_puppet_apply.sh
+    - '2'
+    - file,file_line,concat,augeas,rabbitmq_policy,rabbitmq_user,rabbitmq_ready
+    - include tripleo::profile::pacemaker::rabbitmq_bundle
+    env:
+    - name: KOLLA_BOOTSTRAP
+      value: true
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: RABBITMQ_CLUSTER_COOKIE
+      value: xWbutd1PlwdCp8F7pzhk
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    image: 38.102.83.65:5001/tripleomaster/openstack-rabbitmq:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id008
+        detach: false
+        environment:
+          KOLLA_BOOTSTRAP: true
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          RABBITMQ_CLUSTER_COOKIE: xWbutd1PlwdCp8F7pzhk
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-rabbitmq:2fa7870e5aa16053f63f8b63df4f955b
+        ipc: host
+        net: host
+        start_order: 0
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /var/lib/container-config-scripts/container_puppet_apply.sh:/container_puppet_apply.sh:ro
+        - /etc/puppet:/tmp/puppet-etc:ro
+        - /usr/share/openstack-puppet/modules:/usr/share/openstack-puppet/modules:ro
+        - /bin/true:/bin/epmd
+      config_id: tripleo_step2
+      container_name: rabbitmq_wait_bundle
+      managed_by: tripleo_ansible
+      temporary: true
+    name: rabbitmq_wait_bundle
+    securityContext:
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /container_puppet_apply.sh
+      name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+      readOnly: true
+    - mountPath: /tmp/puppet-etc
+      name: _etc_puppet___tmp_puppet-etc
+      readOnly: true
+    - mountPath: /usr/share/openstack-puppet/modules
+      name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+      readOnly: true
+    - mountPath: /bin/epmd
+      name: _bin_true___bin_epmd
+  - command: &id009
+    - /bin/bash
+    - -c
+    - chown -R nova:nova /var/log/nova
+    env:
+    - name: TRIPLEO_DEPLOY_IDENTIFIER
+      value: '1630486528'
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-compute:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id009
+        environment:
+          TRIPLEO_DEPLOY_IDENTIFIER: '1630486528'
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-compute:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/nova:/var/log/nova:z
+      config_id: tripleo_step2
+      container_name: nova_compute_init_log
+      managed_by: tripleo_ansible
+      temporary: true
+    name: nova_compute_init_log
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+  - command: &id010
+    - /bin/bash
+    - -c
+    - chown -R neutron:neutron /var/log/neutron
+    image: 38.102.83.65:5001/tripleomaster/openstack-neutron-server:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id010
+        image: 38.102.83.65:5001/tripleomaster/openstack-neutron-server:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/log/containers/httpd/neutron-api:/var/log/httpd:z
+      config_id: tripleo_step2
+      container_name: neutron_init_logs
+      managed_by: tripleo_ansible
+      temporary: true
+    name: neutron_init_logs
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_neutron-api___var_log_httpd
+  - command: &id011
+    - /bin/bash
+    - -c
+    - chown -R cinder:cinder /var/log/cinder
+    image: 38.102.83.65:5001/tripleomaster/openstack-cinder-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        command: *id011
+        image: 38.102.83.65:5001/tripleomaster/openstack-cinder-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        privileged: false
+        user: root
+        volumes:
+        - /var/log/containers/cinder:/var/log/cinder:z
+        - /var/log/containers/httpd/cinder-api:/var/log/httpd:z
+      config_id: tripleo_step2
+      container_name: cinder_api_init_logs
+      managed_by: tripleo_ansible
+      temporary: true
+    name: cinder_api_init_logs
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /var/log/cinder
+      name: _var_log_containers_cinder___var_log_cinder
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_cinder-api___var_log_httpd
+  hostNetwork: true
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /var/log/containers/nova
+    name: _var_log_containers_nova___var_log_nova
+  - hostPath:
+      path: /var/log/containers/httpd/nova-api
+    name: _var_log_containers_httpd_nova-api___var_log_httpd
+  - hostPath:
+      path: /var/log/containers/horizon
+    name: _var_log_containers_horizon___var_log_horizon
+  - hostPath:
+      path: /var/log/containers/httpd/horizon
+    name: _var_log_containers_httpd_horizon___var_log_httpd
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/horizon/etc/openstack-dashboard
+    name: _var_lib_config-data_puppet-generated_horizon_etc_openstack-dashboard___etc_openstack-dashboard
+  - hostPath:
+      path: /var/log/containers/cinder
+    name: _var_log_containers_cinder___var_log_cinder
+  - hostPath:
+      path: /var/log/containers/httpd/nova-metadata
+    name: _var_log_containers_httpd_nova-metadata___var_log_httpd
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /var/lib/container-config-scripts/container_puppet_apply.sh
+    name: _var_lib_container-config-scripts_container_puppet_apply.sh___container_puppet_apply.sh
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___tmp_puppet-etc
+  - hostPath:
+      path: /usr/share/openstack-puppet/modules
+    name: _usr_share_openstack-puppet_modules___usr_share_openstack-puppet_modules
+  - hostPath:
+      path: /var/lib/mysql
+    name: _var_lib_mysql___var_lib_mysql
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/mysql/root
+    name: _var_lib_config-data_puppet-generated_mysql_root___root
+  - hostPath:
+      path: /var/log/containers/glance
+    name: _var_log_containers_glance___var_log_glance
+  - hostPath:
+      path: /var/log/containers/httpd/glance
+    name: _var_log_containers_httpd_glance___var_log_httpd
+  - hostPath:
+      path: /bin/true
+    name: _bin_true___bin_epmd
+  - hostPath:
+      path: /var/log/containers/neutron
+    name: _var_log_containers_neutron___var_log_neutron
+  - hostPath:
+      path: /var/log/containers/httpd/neutron-api
+    name: _var_log_containers_httpd_neutron-api___var_log_httpd
+  - hostPath:
+      path: /var/log/containers/httpd/cinder-api
+    name: _var_log_containers_httpd_cinder-api___var_log_httpd

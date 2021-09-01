@@ -1,0 +1,1457 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: tripleo-step-tripleo_step4
+  name: tripleo_step4-step-0
+spec:
+  containers:
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 884565cb9719e2e4c2a72b7dfeed7946
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-novncproxy:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 884565cb9719e2e4c2a72b7dfeed7946
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-novncproxy:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/nova:/var/log/nova
+        - /var/lib/kolla/config_files/nova_vnc_proxy.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step4
+      container_name: nova_vnc_proxy
+      managed_by: tripleo_ansible
+    name: nova_vnc_proxy
+    securityContext:
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova_vnc_proxy.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova___var_lib_kolla_config_files_src
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 884565cb9719e2e4c2a72b7dfeed7946
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-conductor:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 884565cb9719e2e4c2a72b7dfeed7946
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-conductor:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/nova:/var/log/nova
+        - /var/lib/kolla/config_files/nova_conductor.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step4
+      container_name: nova_conductor
+      managed_by: tripleo_ansible
+    name: nova_conductor
+    securityContext:
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova_conductor.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova___var_lib_kolla_config_files_src
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-object:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        healthcheck:
+          test: /usr/share/openstack-tripleo-common/healthcheck/cron swift
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-object:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_recon_cron.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_recon_cron
+      managed_by: tripleo_ansible
+    name: swift_recon_cron
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_recon_cron.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-container:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-container:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_container_server.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_container_server
+      managed_by: tripleo_ansible
+    name: swift_container_server
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_container_server.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-account:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-account:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_account_reaper.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift:z
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_account_reaper
+      managed_by: tripleo_ansible
+    name: swift_account_reaper
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_account_reaper.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-container:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-container:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_container_updater.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_container_updater
+      managed_by: tripleo_ansible
+    name: swift_container_updater
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_container_updater.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 4d1b89d476636748267f959151a9bca6
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-compute:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 4d1b89d476636748267f959151a9bca6
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-compute:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: true
+        restart: always
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/nova-migration-target.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova_libvirt:/var/lib/kolla/config_files/src:ro
+        - /etc/ssh/:/host-ssh/:ro
+        - /run/libvirt:/run/libvirt:shared,z
+        - /var/lib/nova:/var/lib/nova:shared
+      config_id: tripleo_step4
+      container_name: nova_migration_target
+      managed_by: tripleo_ansible
+    name: nova_migration_target
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova-migration-target.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova_libvirt___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /host-ssh
+      name: _etc_ssh___host-ssh
+      readOnly: true
+    - mountPath: /run/libvirt
+      name: _run_libvirt___run_libvirt
+    - mountPath: /var/lib/nova
+      name: _var_lib_nova___var_lib_nova
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-object:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-object:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_object_server.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_object_server
+      managed_by: tripleo_ansible
+    name: swift_object_server
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_object_server.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-proxy-server:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-proxy-server:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_object_expirer.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_object_expirer
+      managed_by: tripleo_ansible
+    name: swift_object_expirer
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_object_expirer.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-object:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-object:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_object_updater.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_object_updater
+      managed_by: tripleo_ansible
+    name: swift_object_updater
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_object_updater.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: f4a0c0a54b938242362c895b318dd03d
+    image: 38.102.83.65:5001/tripleomaster/openstack-neutron-server:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: f4a0c0a54b938242362c895b318dd03d
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-neutron-server:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        start_order: 0
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/neutron:/var/log/neutron:z
+        - /var/log/containers/httpd/neutron-api:/var/log/httpd:z
+        - /var/lib/kolla/config_files/neutron_api.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/neutron:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step4
+      container_name: neutron_api
+      managed_by: tripleo_ansible
+    name: neutron_api
+    securityContext:
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/neutron
+      name: _var_log_containers_neutron___var_log_neutron
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_neutron-api___var_log_httpd
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_neutron_api.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 53ed83bb0cae779ff95edb2002262c6f
+    image: 38.102.83.65:5001/tripleomaster/openstack-cron:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 53ed83bb0cae779ff95edb2002262c6f
+        healthcheck:
+          test: /usr/share/openstack-tripleo-common/healthcheck/cron
+        image: 38.102.83.65:5001/tripleomaster/openstack-cron:2fa7870e5aa16053f63f8b63df4f955b
+        net: none
+        pid: host
+        privileged: true
+        restart: always
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/logrotate-crond.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/crond:/var/lib/kolla/config_files/src:ro
+        - /var/log/containers:/var/log/containers:z
+      config_id: tripleo_step4
+      container_name: logrotate_crond
+      managed_by: tripleo_ansible
+    name: logrotate_crond
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_logrotate-crond.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_crond___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/log/containers
+      name: _var_log_containers___var_log_containers
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 884565cb9719e2e4c2a72b7dfeed7946
+    image: 38.102.83.65:5001/tripleomaster/openstack-nova-scheduler:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 884565cb9719e2e4c2a72b7dfeed7946
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 38.102.83.65:5001/tripleomaster/openstack-nova-scheduler:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/log/containers/nova:/var/log/nova
+        - /var/lib/kolla/config_files/nova_scheduler.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/nova:/var/lib/kolla/config_files/src:ro
+      config_id: tripleo_step4
+      container_name: nova_scheduler
+      managed_by: tripleo_ansible
+    name: nova_scheduler
+    securityContext:
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/log/nova
+      name: _var_log_containers_nova___var_log_nova
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_nova_scheduler.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_nova___var_lib_kolla_config_files_src
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: da7c1558ea9a9c219b9f9b497f837f1e
+    image: 38.102.83.65:5001/tripleomaster/openstack-cinder-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: da7c1558ea9a9c219b9f9b497f837f1e
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-cinder-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/config-data/puppet-generated/cinder:/var/lib/kolla/config_files/src:ro
+        - /var/log/containers/cinder:/var/log/cinder:z
+        - /var/lib/kolla/config_files/cinder_api.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/log/containers/httpd/cinder-api:/var/log/httpd:z
+      config_id: tripleo_step4
+      container_name: cinder_api
+      managed_by: tripleo_ansible
+    name: cinder_api
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_cinder___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/log/cinder
+      name: _var_log_containers_cinder___var_log_cinder
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_cinder_api.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_cinder-api___var_log_httpd
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: da7c1558ea9a9c219b9f9b497f837f1e
+    image: 38.102.83.65:5001/tripleomaster/openstack-cinder-scheduler:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: da7c1558ea9a9c219b9f9b497f837f1e
+        healthcheck:
+          test: /openstack/healthcheck 5672
+        image: 38.102.83.65:5001/tripleomaster/openstack-cinder-scheduler:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/config-data/puppet-generated/cinder:/var/lib/kolla/config_files/src:ro
+        - /var/log/containers/cinder:/var/log/cinder:z
+        - /var/lib/kolla/config_files/cinder_scheduler.json:/var/lib/kolla/config_files/config.json:ro
+      config_id: tripleo_step4
+      container_name: cinder_scheduler
+      managed_by: tripleo_ansible
+    name: cinder_scheduler
+    securityContext:
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_cinder___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/log/cinder
+      name: _var_log_containers_cinder___var_log_cinder
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_cinder_scheduler.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: 2c167990b9fe640a038668e6847bf208
+    image: 38.102.83.65:5001/tripleomaster/openstack-swift-account:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: 2c167990b9fe640a038668e6847bf208
+        healthcheck:
+          test: /openstack/healthcheck
+        image: 38.102.83.65:5001/tripleomaster/openstack-swift-account:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        restart: always
+        user: swift
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/swift_account_server.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/swift:/var/lib/kolla/config_files/src:ro
+        - /srv/node:/srv/node
+        - /dev:/dev
+        - /var/cache/swift:/var/cache/swift
+        - /var/log/containers/swift:/var/log/swift:z
+      config_id: tripleo_step4
+      container_name: swift_account_server
+      managed_by: tripleo_ansible
+    name: swift_account_server
+    securityContext:
+      runAsGroup: 42445
+      runAsUser: 42445
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_swift_account_server.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /srv/node
+      name: _srv_node___srv_node
+    - mountPath: /dev
+      name: _dev___dev
+    - mountPath: /var/cache/swift
+      name: _var_cache_swift___var_cache_swift
+    - mountPath: /var/log/swift
+      name: _var_log_containers_swift___var_log_swift
+  - env:
+    - name: KOLLA_CONFIG_STRATEGY
+      value: COPY_ALWAYS
+    - name: TRIPLEO_CONFIG_HASH
+      value: da7c1558ea9a9c219b9f9b497f837f1e
+    image: 38.102.83.65:5001/tripleomaster/openstack-cinder-api:2fa7870e5aa16053f63f8b63df4f955b
+    label:
+      config_data:
+        environment:
+          KOLLA_CONFIG_STRATEGY: COPY_ALWAYS
+          TRIPLEO_CONFIG_HASH: da7c1558ea9a9c219b9f9b497f837f1e
+        healthcheck:
+          test: /usr/share/openstack-tripleo-common/healthcheck/cron cinder
+        image: 38.102.83.65:5001/tripleomaster/openstack-cinder-api:2fa7870e5aa16053f63f8b63df4f955b
+        net: host
+        privileged: false
+        restart: always
+        user: root
+        volumes:
+        - /etc/hosts:/etc/hosts:ro
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/pki/ca-trust/extracted:/etc/pki/ca-trust/extracted:ro
+        - /etc/pki/ca-trust/source/anchors:/etc/pki/ca-trust/source/anchors:ro
+        - /etc/pki/tls/certs/ca-bundle.crt:/etc/pki/tls/certs/ca-bundle.crt:ro
+        - /etc/pki/tls/certs/ca-bundle.trust.crt:/etc/pki/tls/certs/ca-bundle.trust.crt:ro
+        - /etc/pki/tls/cert.pem:/etc/pki/tls/cert.pem:ro
+        - /dev/log:/dev/log
+        - /etc/puppet:/etc/puppet:ro
+        - /var/lib/kolla/config_files/cinder_api_cron.json:/var/lib/kolla/config_files/config.json:ro
+        - /var/lib/config-data/puppet-generated/cinder:/var/lib/kolla/config_files/src:ro
+        - /var/log/containers/cinder:/var/log/cinder:z
+        - /var/log/containers/httpd/cinder-api:/var/log/httpd:z
+      config_id: tripleo_step4
+      container_name: cinder_api_cron
+      managed_by: tripleo_ansible
+    name: cinder_api_cron
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 0
+      runAsUser: 0
+    volumeMounts:
+    - mountPath: /etc/hosts
+      name: _etc_hosts___etc_hosts
+      readOnly: true
+    - mountPath: /etc/localtime
+      name: _etc_localtime___etc_localtime
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/extracted
+      name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+      readOnly: true
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.crt
+      name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/certs/ca-bundle.trust.crt
+      name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+      readOnly: true
+    - mountPath: /etc/pki/tls/cert.pem
+      name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+      readOnly: true
+    - mountPath: /dev/log
+      name: _dev_log___dev_log
+    - mountPath: /etc/puppet
+      name: _etc_puppet___etc_puppet
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/config.json
+      name: _var_lib_kolla_config_files_cinder_api_cron.json___var_lib_kolla_config_files_config.json
+      readOnly: true
+    - mountPath: /var/lib/kolla/config_files/src
+      name: _var_lib_config-data_puppet-generated_cinder___var_lib_kolla_config_files_src
+      readOnly: true
+    - mountPath: /var/log/cinder
+      name: _var_log_containers_cinder___var_log_cinder
+    - mountPath: /var/log/httpd
+      name: _var_log_containers_httpd_cinder-api___var_log_httpd
+  hostNetwork: true
+  restartPolicy: Always
+  volumes:
+  - hostPath:
+      path: /etc/hosts
+    name: _etc_hosts___etc_hosts
+  - hostPath:
+      path: /etc/localtime
+    name: _etc_localtime___etc_localtime
+  - hostPath:
+      path: /etc/pki/ca-trust/extracted
+    name: _etc_pki_ca-trust_extracted___etc_pki_ca-trust_extracted
+  - hostPath:
+      path: /etc/pki/ca-trust/source/anchors
+    name: _etc_pki_ca-trust_source_anchors___etc_pki_ca-trust_source_anchors
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.crt
+    name: _etc_pki_tls_certs_ca-bundle.crt___etc_pki_tls_certs_ca-bundle.crt
+  - hostPath:
+      path: /etc/pki/tls/certs/ca-bundle.trust.crt
+    name: _etc_pki_tls_certs_ca-bundle.trust.crt___etc_pki_tls_certs_ca-bundle.trust.crt
+  - hostPath:
+      path: /etc/pki/tls/cert.pem
+    name: _etc_pki_tls_cert.pem___etc_pki_tls_cert.pem
+  - hostPath:
+      path: /dev/log
+    name: _dev_log___dev_log
+  - hostPath:
+      path: /etc/puppet
+    name: _etc_puppet___etc_puppet
+  - hostPath:
+      path: /var/log/containers/nova
+    name: _var_log_containers_nova___var_log_nova
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova_vnc_proxy.json
+    name: _var_lib_kolla_config_files_nova_vnc_proxy.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/nova
+    name: _var_lib_config-data_puppet-generated_nova___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova_conductor.json
+    name: _var_lib_kolla_config_files_nova_conductor.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_recon_cron.json
+    name: _var_lib_kolla_config_files_swift_recon_cron.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/swift
+    name: _var_lib_config-data_puppet-generated_swift___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /srv/node
+    name: _srv_node___srv_node
+  - hostPath:
+      path: /dev
+    name: _dev___dev
+  - hostPath:
+      path: /var/cache/swift
+    name: _var_cache_swift___var_cache_swift
+  - hostPath:
+      path: /var/log/containers/swift
+    name: _var_log_containers_swift___var_log_swift
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_container_server.json
+    name: _var_lib_kolla_config_files_swift_container_server.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_account_reaper.json
+    name: _var_lib_kolla_config_files_swift_account_reaper.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_container_updater.json
+    name: _var_lib_kolla_config_files_swift_container_updater.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova-migration-target.json
+    name: _var_lib_kolla_config_files_nova-migration-target.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/nova_libvirt
+    name: _var_lib_config-data_puppet-generated_nova_libvirt___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /etc/ssh
+    name: _etc_ssh___host-ssh
+  - hostPath:
+      path: /run/libvirt
+    name: _run_libvirt___run_libvirt
+  - hostPath:
+      path: /var/lib/nova
+    name: _var_lib_nova___var_lib_nova
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_object_server.json
+    name: _var_lib_kolla_config_files_swift_object_server.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_object_expirer.json
+    name: _var_lib_kolla_config_files_swift_object_expirer.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_object_updater.json
+    name: _var_lib_kolla_config_files_swift_object_updater.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/log/containers/neutron
+    name: _var_log_containers_neutron___var_log_neutron
+  - hostPath:
+      path: /var/log/containers/httpd/neutron-api
+    name: _var_log_containers_httpd_neutron-api___var_log_httpd
+  - hostPath:
+      path: /var/lib/kolla/config_files/neutron_api.json
+    name: _var_lib_kolla_config_files_neutron_api.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/neutron
+    name: _var_lib_config-data_puppet-generated_neutron___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/lib/kolla/config_files/logrotate-crond.json
+    name: _var_lib_kolla_config_files_logrotate-crond.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/crond
+    name: _var_lib_config-data_puppet-generated_crond___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/log/containers
+    name: _var_log_containers___var_log_containers
+  - hostPath:
+      path: /var/lib/kolla/config_files/nova_scheduler.json
+    name: _var_lib_kolla_config_files_nova_scheduler.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/config-data/puppet-generated/cinder
+    name: _var_lib_config-data_puppet-generated_cinder___var_lib_kolla_config_files_src
+  - hostPath:
+      path: /var/log/containers/cinder
+    name: _var_log_containers_cinder___var_log_cinder
+  - hostPath:
+      path: /var/lib/kolla/config_files/cinder_api.json
+    name: _var_lib_kolla_config_files_cinder_api.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/log/containers/httpd/cinder-api
+    name: _var_log_containers_httpd_cinder-api___var_log_httpd
+  - hostPath:
+      path: /var/lib/kolla/config_files/cinder_scheduler.json
+    name: _var_lib_kolla_config_files_cinder_scheduler.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/swift_account_server.json
+    name: _var_lib_kolla_config_files_swift_account_server.json___var_lib_kolla_config_files_config.json
+  - hostPath:
+      path: /var/lib/kolla/config_files/cinder_api_cron.json
+    name: _var_lib_kolla_config_files_cinder_api_cron.json___var_lib_kolla_config_files_config.json
